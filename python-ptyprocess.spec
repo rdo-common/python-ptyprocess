@@ -5,8 +5,8 @@
 %endif
 
 Name:           python-ptyprocess
-Version:        0.3.1
-Release:        2%{?dist}
+Version:        0.4
+Release:        1%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -82,6 +82,9 @@ py.test
 %endif
 
 %changelog
+* Wed Jan 07 2015 Thomas Spura <tomspur@fedoraproject.org> - 0.4-1
+- update to 0.4
+
 * Wed Dec 03 2014 Thomas Spura <tomspur@fedoraproject.org> - 0.3.1-2
 - Generalize with_python3 macro
 - Add comment to tests section
