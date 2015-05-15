@@ -35,6 +35,7 @@ process and its pty.
 
 %prep
 %setup -qn ptyprocess-%{version}
+rm -r tests/__pycache__ tests/*.pyc
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -ar . %{py3dir}
