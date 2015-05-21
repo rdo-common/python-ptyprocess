@@ -5,7 +5,7 @@
 %endif
 
 Name:           python-ptyprocess
-Version:        0.4
+Version:        0.5
 Release:        1%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
@@ -35,7 +35,6 @@ process and its pty.
 
 %prep
 %setup -qn ptyprocess-%{version}
-rm -r tests/__pycache__ tests/*.pyc
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -ar . %{py3dir}
@@ -60,8 +59,6 @@ popd
 %{__python} setup.py install --skip-build --root %{buildroot}
 
 %check
-# The next version will include tests. There aren't any yet...:
-# https://github.com/pexpect/ptyprocess/pull/4
 %if 0%{?with_python3}
 pushd %{py3dir}
 %{_bindir}/py.test-3*
@@ -83,6 +80,9 @@ py.test
 %endif
 
 %changelog
+* Thu May 21 2015 Thomas Spura <tomspur@fedoraproject.org> - 0.5-1
+- update to 0.5 (#1223718)
+
 * Wed Jan 07 2015 Thomas Spura <tomspur@fedoraproject.org> - 0.4-1
 - update to 0.4
 
