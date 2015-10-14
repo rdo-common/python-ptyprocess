@@ -60,9 +60,9 @@ LC_ALL=en_US.UTF-8 \
 
 %check
 %if 0%{?with_python3}
-%{_bindir}/py.test-3*
+%{_bindir}/py.test-3.*
 %endif
-%{_bindir}/py.test-2*
+%{_bindir}/py.test-2.*
 
 %files -n python2-ptyprocess
 # TODO add COPYING with next release
