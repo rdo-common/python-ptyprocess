@@ -1,4 +1,4 @@
-%global pypi_name ptyprocess
+%global modname ptyprocess
 
 %if 0%{?fedora}
     %global with_python3 1
@@ -25,9 +25,17 @@ BuildRequires:  python3-pytest
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 
+%package -n python2-ptyprocess
+Summary:        Run a subprocess in a pseudo terminal
+%{?python_provide:%python_provide python2-%{modname}}
+%description -n python2-ptyprocess
+Launch a subprocess in a pseudo terminal (pty), and interact with both the
+process and its pty.
+
 %if 0%{?with_python3}
 %package -n python3-ptyprocess
 Summary:        Run a subprocess in a pseudo terminal
+%{?python_provide:%python_provide python3-%{modname}}
 %description -n python3-ptyprocess
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
@@ -35,42 +43,32 @@ process and its pty.
 
 %prep
 %setup -qn ptyprocess-%{version}
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -ar . %{py3dir}
-%endif
 
 %build
-%{__python} setup.py build
+%py2_build
 %if 0%{?with_python3}
-pushd %{py3dir}
 LC_ALL=en_US.UTF-8 \
-    %{__python3} setup.py build
-popd
+    %py3_build
 %endif
 
 %install
 %if 0%{?with_python3}
-pushd %{py3dir}
 LC_ALL=en_US.UTF-8 \
-    %{__python3} setup.py install --skip-build --root %{buildroot}
-popd
+    %py3_install
 %endif
-%{__python} setup.py install --skip-build --root %{buildroot}
+%py2_install
 
 %check
 %if 0%{?with_python3}
-pushd %{py3dir}
 %{_bindir}/py.test-3*
-popd
 %endif
-py.test
+%{_bindir}/py.test-2*
 
-%files
+%files -n python2-ptyprocess
 # TODO add COPYING with next release
 %doc README.rst
-%{python_sitelib}/ptyprocess/
-%{python_sitelib}/ptyprocess-%{version}-py?.?.egg-info
+%{python2_sitelib}/ptyprocess/
+%{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %if 0%{?with_python3}
 %files -n python3-ptyprocess
@@ -80,6 +78,9 @@ py.test
 %endif
 
 %changelog
+* Wed Oct 14 2015 Thomas Spura <tomspur@fedoraproject.org> - 0.5-3
+- Use new python macros
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
