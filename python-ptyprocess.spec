@@ -5,8 +5,8 @@
 %endif
 
 Name:           python-ptyprocess
-Version:        0.5
-Release:        3%{?dist}
+Version:        0.5.1
+Release:        1%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -78,6 +78,9 @@ LC_ALL=en_US.UTF-8 \
 %endif
 
 %changelog
+* Mon Apr 04 2016 Thomas Spura <tomspur@fedoraproject.org> - 0.5.1-1
+- update to 0.5.1 (#1304136)
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
