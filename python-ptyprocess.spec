@@ -2,7 +2,7 @@
 
 Name:           python-ptyprocess
 Version:        0.5.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -12,10 +12,8 @@ Source0:        https://pypi.python.org/packages/source/p/ptyprocess/ptyprocess-
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  pytest
-%if 0%{?with_python3}
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-pytest
-%endif
 
 %description
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
@@ -28,36 +26,28 @@ Summary:        Run a subprocess in a pseudo terminal
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 
-%if 0%{?with_python3}
 %package -n python%{python3_pkgversion}-ptyprocess
 Summary:        Run a subprocess in a pseudo terminal
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{modname}}
 %description -n python%{python3_pkgversion}-ptyprocess
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
-%endif
 
 %prep
 %setup -qn ptyprocess-%{version}
 
 %build
 %py2_build
-%if 0%{?with_python3}
 LC_ALL=en_US.UTF-8 \
     %py3_build
-%endif
 
 %install
-%if 0%{?with_python3}
 LC_ALL=en_US.UTF-8 \
     %py3_install
-%endif
 %py2_install
 
 %check
-%if 0%{?with_python3}
 %{_bindir}/py.test-3.* -v
-%endif
 %{_bindir}/py.test-2.* -v
 
 %files -n python2-ptyprocess
@@ -66,14 +56,15 @@ LC_ALL=en_US.UTF-8 \
 %{python2_sitelib}/ptyprocess/
 %{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
-%if 0%{?with_python3}
 %files -n python%{python3_pkgversion}-ptyprocess
 %doc README.rst
 %{python3_sitelib}/ptyprocess/
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
-%endif
 
 %changelog
+* Thu Feb 23 2017 Orion Poplawski <orion@cora.nwra.com> - 0.5.1-6
+- Really build python3 on EPEL
+
 * Thu Feb 23 2017 Orion Poplawski <orion@cora.nwra.com> - 0.5.1-5
 - Build python3 on EPEL
 - Run tests verbosely
