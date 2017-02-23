@@ -2,7 +2,7 @@
 
 Name:           python-ptyprocess
 Version:        0.5.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
