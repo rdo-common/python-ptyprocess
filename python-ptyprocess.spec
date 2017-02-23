@@ -1,9 +1,5 @@
 %global modname ptyprocess
 
-%if 0%{?fedora}
-    %global with_python3 1
-%endif
-
 Name:           python-ptyprocess
 Version:        0.5.1
 Release:        4%{?dist}
@@ -17,8 +13,8 @@ BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  pytest
 %if 0%{?with_python3}
-BuildRequires:  python3-devel
-BuildRequires:  python3-pytest
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-pytest
 %endif
 
 %description
@@ -33,10 +29,10 @@ Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 
 %if 0%{?with_python3}
-%package -n python3-ptyprocess
+%package -n python%{python3_pkgversion}-ptyprocess
 Summary:        Run a subprocess in a pseudo terminal
-%{?python_provide:%python_provide python3-%{modname}}
-%description -n python3-ptyprocess
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{modname}}
+%description -n python%{python3_pkgversion}-ptyprocess
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 %endif
@@ -60,9 +56,9 @@ LC_ALL=en_US.UTF-8 \
 
 %check
 %if 0%{?with_python3}
-%{_bindir}/py.test-3.*
+%{_bindir}/py.test-3.* -v
 %endif
-%{_bindir}/py.test-2.*
+%{_bindir}/py.test-2.* -v
 
 %files -n python2-ptyprocess
 # TODO add COPYING with next release
@@ -71,13 +67,17 @@ LC_ALL=en_US.UTF-8 \
 %{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %if 0%{?with_python3}
-%files -n python3-ptyprocess
+%files -n python%{python3_pkgversion}-ptyprocess
 %doc README.rst
 %{python3_sitelib}/ptyprocess/
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 %endif
 
 %changelog
+* Thu Feb 23 2017 Orion Poplawski <orion@cora.nwra.com> - 0.5.1-5
+- Build python3 on EPEL
+- Run tests verbosely
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
