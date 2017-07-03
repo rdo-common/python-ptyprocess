@@ -1,13 +1,13 @@
 %global modname ptyprocess
 
 Name:           python-ptyprocess
-Version:        0.5.1
-Release:        6%{?dist}
+Version:        0.5.2
+Release:        1%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
 URL:            https://github.com/pexpect/ptyprocess
-Source0:        https://pypi.python.org/packages/source/p/ptyprocess/ptyprocess-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/p/ptyprocess/ptyprocess-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -51,17 +51,21 @@ LC_ALL=en_US.UTF-8 \
 %{_bindir}/py.test-2.* -v
 
 %files -n python2-ptyprocess
-# TODO add COPYING with next release
+%license LICENSE
 %doc README.rst
 %{python2_sitelib}/ptyprocess/
 %{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %files -n python%{python3_pkgversion}-ptyprocess
+%license LICENSE
 %doc README.rst
 %{python3_sitelib}/ptyprocess/
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %changelog
+* Mon Jul 03 2017 Charalampos Stratakis <cstratak@redhat.com> - 0.5.2-1
+- Update to 0.5.2 (#1467330)
+
 * Thu Feb 23 2017 Orion Poplawski <orion@cora.nwra.com> - 0.5.1-6
 - Really build python3 on EPEL
 
