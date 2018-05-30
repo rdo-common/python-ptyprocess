@@ -1,5 +1,9 @@
 %global modname ptyprocess
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 Name:           python-ptyprocess
 Version:        0.5.2
 Release:        3%{?dist}
@@ -12,8 +16,6 @@ Source0:        https://files.pythonhosted.org/packages/source/p/ptyprocess/ptyp
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  pytest
-BuildRequires:  python%{python3_pkgversion}-devel
-BuildRequires:  python%{python3_pkgversion}-pytest
 
 %description
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
@@ -26,28 +28,40 @@ Summary:        Run a subprocess in a pseudo terminal
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 
+%if 0%{?with_python3}
 %package -n python%{python3_pkgversion}-ptyprocess
 Summary:        Run a subprocess in a pseudo terminal
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{modname}}
+
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-pytest
+
 %description -n python%{python3_pkgversion}-ptyprocess
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
+%endif
 
 %prep
 %setup -qn ptyprocess-%{version}
 
 %build
 %py2_build
+%if 0%{?with_python3}
 LC_ALL=en_US.UTF-8 \
     %py3_build
+%endif
 
 %install
+%if 0%{?with_python3}
 LC_ALL=en_US.UTF-8 \
     %py3_install
+%endif
 %py2_install
 
 %check
+%if 0%{?with_python3}
 %{_bindir}/py.test-3.* -v
+%endif
 %{_bindir}/py.test-2.* -v
 
 %files -n python2-ptyprocess
@@ -56,11 +70,13 @@ LC_ALL=en_US.UTF-8 \
 %{python2_sitelib}/ptyprocess/
 %{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
+%if 0%{?with_python3}
 %files -n python%{python3_pkgversion}-ptyprocess
 %license LICENSE
 %doc README.rst
 %{python3_sitelib}/ptyprocess/
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
+%endif
 
 %changelog
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.2-3
