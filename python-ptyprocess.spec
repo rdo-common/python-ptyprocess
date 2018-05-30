@@ -1,8 +1,12 @@
 %global modname ptyprocess
 
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global with_python3 1
+%endif
+
 Name:           python-ptyprocess
 Version:        0.6.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -12,8 +16,6 @@ Source0:        https://files.pythonhosted.org/packages/source/p/ptyprocess/ptyp
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  pytest
-BuildRequires:  python%{python3_pkgversion}-devel
-BuildRequires:  python%{python3_pkgversion}-pytest
 
 %description
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
@@ -26,26 +28,38 @@ Summary:        Run a subprocess in a pseudo terminal
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
 
+%if 0%{?with_python3}
 %package -n python%{python3_pkgversion}-ptyprocess
 Summary:        Run a subprocess in a pseudo terminal
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{modname}}
+
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-pytest
+
 %description -n python%{python3_pkgversion}-ptyprocess
 Launch a subprocess in a pseudo terminal (pty), and interact with both the
 process and its pty.
+%endif
 
 %prep
 %setup -qn ptyprocess-%{version}
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 %install
+%if 0%{?with_python3}
 %py3_install
+%endif
 %py2_install
 
 %check
+%if 0%{?with_python3}
 %{_bindir}/py.test-3.* -v
+%endif
 %{_bindir}/py.test-2.* -v
 
 %files -n python2-ptyprocess
@@ -54,13 +68,18 @@ process and its pty.
 %{python2_sitelib}/ptyprocess/
 %{python2_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
+%if 0%{?with_python3}
 %files -n python%{python3_pkgversion}-ptyprocess
 %license LICENSE
 %doc README.rst
 %{python3_sitelib}/ptyprocess/
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
+%endif
 
 %changelog
+* Mon Feb 18 2019 Yatin Karel <ykarel@redhat.com> - 0.6.0-5
+- Add conditionals to disable python3 for CentOS <= 7
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
