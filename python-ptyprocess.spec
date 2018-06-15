@@ -2,7 +2,7 @@
 
 Name:           python-ptyprocess
 Version:        0.5.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -63,6 +63,9 @@ LC_ALL=en_US.UTF-8 \
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %changelog
+* Fri Jun 15 2018 Miro Hrončok <mhroncok@redhat.com> - 0.5.2-4
+- Rebuilt for Python 3.7
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
