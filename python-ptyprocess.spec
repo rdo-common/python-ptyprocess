@@ -1,8 +1,8 @@
 %global modname ptyprocess
 
 Name:           python-ptyprocess
-Version:        0.5.2
-Release:        4%{?dist}
+Version:        0.6.0
+Release:        1%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -63,6 +63,9 @@ LC_ALL=en_US.UTF-8 \
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %changelog
+* Fri Jun 22 2018 Orion Poplawski <orion@nwra.com> - 0.6.0-1
+- Update to 0.6.0
+
 * Fri Jun 15 2018 Miro Hrončok <mhroncok@redhat.com> - 0.5.2-4
 - Rebuilt for Python 3.7
 
