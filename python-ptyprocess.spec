@@ -2,7 +2,7 @@
 
 Name:           python-ptyprocess
 Version:        0.6.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Run a subprocess in a pseudo terminal
 
 License:        ISC
@@ -38,12 +38,10 @@ process and its pty.
 
 %build
 %py2_build
-LC_ALL=en_US.UTF-8 \
-    %py3_build
+%py3_build
 
 %install
-LC_ALL=en_US.UTF-8 \
-    %py3_install
+%py3_install
 %py2_install
 
 %check
@@ -63,6 +61,10 @@ LC_ALL=en_US.UTF-8 \
 %{python3_sitelib}/ptyprocess-%{version}-py?.?.egg-info
 
 %changelog
+* Sun Nov 18 2018 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.6.0-3
+- Drop explicit locale setting
+  See https://fedoraproject.org/wiki/Changes/Remove_glibc-langpacks-all_from_buildroot
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
